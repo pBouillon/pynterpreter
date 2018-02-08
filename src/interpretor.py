@@ -68,7 +68,7 @@ EXTENSION = '.bf'
 # Max loop repetition
 MAX_LOOP  = 200
 # Numbers of blocks
-SIZE      = 30
+SIZE      = 16
 
 class Interpetor:
     """References Interpretor
@@ -80,7 +80,7 @@ class Interpetor:
         __vals     : blocks for execution
         __tokens   : token parsed
     """
-    def __init__(self, limit=MAX_LOOP, size=SIZE):
+    def __init__ (self, limit=MAX_LOOP, size=SIZE):
         """Initialize the interpretor
 
         limit and size are optionnal
@@ -92,20 +92,21 @@ class Interpetor:
         self.__vals   = [0 for x in range(self.__tab_size)]
         self.__tokens = []
 
-    def __str__(self):
+    def __str__ (self):
         """Show blocks state
         """
-        tostr = 'Memory tab :\n| '
+        tostr = '\n-----\nMemory tab :\n| '
         for x in self.__vals:
             tostr += str(x) + ' | '
+        tostr += '\n-----'
         return tostr
 
-    def __abort(self, msg, errcode) :
+    def __abort (self, msg, errcode) :
         errmsg = 'Error: ' + msg
         print (errmsg, file=stderr)
         exit (errcode)
 
-    def __execute(self):
+    def __execute (self):
         """Run the tokenized code
         """
         index      = step    = loop = 0
@@ -123,15 +124,13 @@ class Interpetor:
                 self.__vals[index] -= 1
             # Currrent token is >
             elif token == OP_NEXT:
-                print('index is now: {}'.format(index))
                 index += 1
-                if index >= self.__tab_size:
+                if index == self.__tab_size:
                     index = 0
             # Currrent token is <
             elif token == OP_PREV:
-                print('index is now: {}'.format(index))
                 index -= 1
-                if index < 0 :
+                if index == -1 :
                     index = self.__tab_size - 1
             # Currrent token is ,
             elif token == OP_INP:
@@ -139,10 +138,7 @@ class Interpetor:
                 self.__vals[index] = ord(entry)
             # Currrent token is ,
             elif token == OP_PRINT:
-                content = ''
-                for v in self.__vals:
-                    if v != 0:
-                        content += chr(v)
+                content = chr(self.__vals[index])
                 prog_print += content
             # Currrent token is [
             elif token == OP_LOOP_B:
@@ -153,16 +149,19 @@ class Interpetor:
                 if loop == self.__max_loop:
                     self.__abort('looped too many times', 1)
                 if self.__vals[index] == 0:
-                    step += 1
                     beg_ind = end_ind = -1
+                    loop = 0
                 else:
                     step = beg_ind
                     loop += 1
                     continue
             step += 1
-        print (prog_print)
+        print (
+            'Output:\n\t' +
+            prog_print
+        )
 
-    def __tokenize(self):
+    def __tokenize (self):
         """Get all tokens
         """
         l_b = l_e = 0
@@ -180,7 +179,7 @@ class Interpetor:
         if l_e != l_b:
             self.__abort ('missing brackets', 1)
 
-    def run(self, code='', file=''):
+    def run (self, code='', file=''):
         """Run the BF code
         """
         beg = time()
@@ -198,15 +197,13 @@ class Interpetor:
                 with source.open() as f:
                     self.__code = f.read()
                 # clearing code
-                self.__code = ''.join(
+                self.__code = ''.join (
                     [c for c in self.__code if c in OPS]
                 )
             else:
                 self.__abort ('File does not exists', 1)
         else :        
             self.__code = code
-
-        print(self.__code)
 
         self.__tokenize()
         self.__execute()

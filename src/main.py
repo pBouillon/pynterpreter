@@ -34,12 +34,5 @@ def hello_world() :
     pyint.run(file='../etc/hello_world.bf')
     print(pyint)
 
-def test_loop_fail() :
-    code = '[+]'
-    pyint3 = Interpetor(limit=5)
-    pyint3.run(code) # expecting to fail: limit 5 and code loop 9 times
-    print(pyint3)
-
 if __name__ == '__main__':
     hello_world()
-    # test_loop_fail()
