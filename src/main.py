@@ -25,17 +25,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import interpetor
-from interpetor import Interpetor
-
-# TODO: replace with file reading
-HELLO_WORLD = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.'
-
+import interpretor
+from interpretor import Interpetor
 
 def hello_world() :
     pyint = Interpetor()
+    # pyint.run(code=HELLO_WORLD)
+    pyint.run(file='../etc/hello_world.bf')
     print(pyint)
-    pyint.run(HELLO_WORLD)
 
 def test_loop_fail() :
     code = '[+]'
@@ -45,4 +42,4 @@ def test_loop_fail() :
 
 if __name__ == '__main__':
     hello_world()
-    test_loop_fail()
+    # test_loop_fail()

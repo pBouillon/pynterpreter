@@ -28,6 +28,9 @@ SOFTWARE.
 import pathlib
 from pathlib import Path
 
+import sys
+from sys import stderr
+
 import time
 from time import time
 
@@ -100,7 +103,7 @@ class Interpetor:
 
     def __abort(self, msg, errcode) :
         errmsg = 'Error: ' + msg
-        print (errmsg, file=sys.stderr)
+        print (errmsg, file=stderr)
         exit (errcode)
 
     def __execute(self):
@@ -166,7 +169,7 @@ class Interpetor:
         l_b = l_e = 0
         for c in self.__code:
             if c not in OPS:
-                self.__abort ('Unknown symbol \'' + c + '\'', 1)
+                self.__abort ('Unknown symbol:' + c , 1)
             self.__tokens.append(c)
         for t in self.__tokens:
             if t == OP_LOOP_B:
@@ -181,7 +184,7 @@ class Interpetor:
     def run(self, code='', file=''):
         """Run the BF code
         """
-        beg = time 
+        beg = time()
 
         if file and code:
             print ('WARNING: reading file instead of the code')
@@ -191,15 +194,21 @@ class Interpetor:
             if source.exists() :
                 if not source.is_file():
                     self.__abort ('Source is not a file', 1)
-                if source.suffix() is not EXTENSION:
+                if file[len(file) - 3 :] != EXTENSION:
                     self.__abort ('Source is not a BF file', 1)
                 with source.open() as f:
                     self.__code = f.read()
+                # clearing \n
+                self.__code = ''.join(
+                    [c for c in self.__code if c not in ' \t\n']
+                )
             else:
                 self.__abort ('File does not exists', 1)
         else :        
             self.__code = code
 
+        print(self.__code)
+
         self.__tokenize()
         self.__execute()
-        print ('Finished in {} ms.'.format(beg - time()))
+        print ('Finished in {} ms.'.format(time() - beg))
