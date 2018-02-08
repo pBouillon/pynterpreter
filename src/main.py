@@ -1,3 +1,7 @@
+# !/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
 MIT License
 
 Copyright (c) 2018 Pierre Bouillon
@@ -19,3 +23,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+"""
+
+import interpetor
+from interpetor import Interpetor
+
+# TODO: replace with file reading
+HELLO_WORLD = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.'
+
+
+def hello_world() :
+    pyint = Interpetor()
+    print(pyint)
+    pyint.run(HELLO_WORLD)
+
+def test_loop_fail() :
+    code = '[+]'
+    pyint3 = Interpetor(limit=5)
+    pyint3.run(code) # expecting to fail: limit 5 and code loop 9 times
+    print(pyint3)
+
+if __name__ == '__main__':
+    hello_world()
+    test_loop_fail()
