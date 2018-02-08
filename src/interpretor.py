@@ -100,7 +100,6 @@ class Interpetor:
             tostr += str(x) + ' | '
         return tostr
 
-
     def __abort(self, msg, errcode) :
         errmsg = 'Error: ' + msg
         print (errmsg, file=stderr)
@@ -124,15 +123,15 @@ class Interpetor:
                 self.__vals[index] -= 1
             # Currrent token is >
             elif token == OP_NEXT:
-                if index < self.__tab_size:
-                    index += 1
-                else:
+                print('index is now: {}'.format(index))
+                index += 1
+                if index >= self.__tab_size:
                     index = 0
             # Currrent token is <
             elif token == OP_PREV:
-                if index > 0 :
-                    index -= 1
-                else:
+                print('index is now: {}'.format(index))
+                index -= 1
+                if index < 0 :
                     index = self.__tab_size - 1
             # Currrent token is ,
             elif token == OP_INP:
@@ -198,9 +197,9 @@ class Interpetor:
                     self.__abort ('Source is not a BF file', 1)
                 with source.open() as f:
                     self.__code = f.read()
-                # clearing \n
+                # clearing code
                 self.__code = ''.join(
-                    [c for c in self.__code if c not in ' \t\n']
+                    [c for c in self.__code if c in OPS]
                 )
             else:
                 self.__abort ('File does not exists', 1)
