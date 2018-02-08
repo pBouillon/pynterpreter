@@ -25,6 +25,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import pathlib
+from pathlib import Path
+
+import time
+from time import time
+
 # Increase current block
 OP_INC    = '+'
 # Decrease current block
@@ -54,10 +60,12 @@ OPS = [
     OP_LOOP_E
 ]
 
+# BF extension
+EXTENSION = '.bf'
 # Max loop repetition
-MAX_LOOP = 200
+MAX_LOOP  = 200
 # Numbers of blocks
-SIZE     = 30
+SIZE      = 30
 
 class Interpetor:
     """References Interpretor
@@ -89,23 +97,11 @@ class Interpetor:
             tostr += str(x) + ' | '
         return tostr
 
-    def __tokenize(self):
-        """Get all tokens
-        """
-        l_b = l_e = 0
-        for c in self.__code:
-            if c not in OPS:
-                exit('Error: Unknown symbol \'' + c + '\'')
-            self.__tokens.append(c)
-        for t in self.__tokens:
-            if t == OP_LOOP_B:
-                l_b += 1
-            if t == OP_LOOP_E:
-                l_e += 1
-            if l_e > l_b:
-                exit('Error: loop closed before begin')
-        if l_e != l_b:
-            exit('Error: missing brackets')
+
+    def __abort(self, msg, errcode) :
+        errmsg = 'Error: ' + msg
+        print (errmsg, file=sys.stderr)
+        exit (errcode)
 
     def __execute(self):
         """Run the tokenized code
@@ -153,7 +149,7 @@ class Interpetor:
             # Currrent token is ]
             elif token == OP_LOOP_E:
                 if loop == self.__max_loop:
-                    exit('Error: looped too many times')
+                    self.__abort('looped too many times', 1)
                 if self.__vals[index] == 0:
                     step += 1
                     beg_ind = end_ind = -1
@@ -164,10 +160,46 @@ class Interpetor:
             step += 1
         print (prog_print)
 
-    def run(self, code):
+    def __tokenize(self):
+        """Get all tokens
+        """
+        l_b = l_e = 0
+        for c in self.__code:
+            if c not in OPS:
+                self.__abort ('Unknown symbol \'' + c + '\'', 1)
+            self.__tokens.append(c)
+        for t in self.__tokens:
+            if t == OP_LOOP_B:
+                l_b += 1
+            if t == OP_LOOP_E:
+                l_e += 1
+            if l_e > l_b:
+                self.__abort ('loop closed before opened', 1)
+        if l_e != l_b:
+            self.__abort ('missing brackets', 1)
+
+    def run(self, code='', file=''):
         """Run the BF code
         """
-        self.__code = code
+        beg = time 
+
+        if file and code:
+            print ('WARNING: reading file instead of the code')
+
+        if file:
+            source = Path(file)
+            if source.exists() :
+                if not source.is_file():
+                    self.__abort ('Source is not a file', 1)
+                if source.suffix() is not EXTENSION:
+                    self.__abort ('Source is not a BF file', 1)
+                with source.open() as f:
+                    self.__code = f.read()
+            else:
+                self.__abort ('File does not exists', 1)
+        else :        
+            self.__code = code
+
         self.__tokenize()
-        print('Output: ')
         self.__execute()
+        print ('Finished in {} ms.'.format(beg - time()))
