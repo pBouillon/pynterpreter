@@ -62,6 +62,35 @@ adding 105
 <<<.             SPACE
 
 ================= awsome
+adding 100
+>+++++ +++++
+[
+    >+++++ +++++ a
+    >+++++ +++++ w
+    >+++++ +++++ e
+    >+++++ +++++ s
+    >+++++ +++++ o
+    <<<<<-
+]
+>---.[-]            Displays a and clear
+adding 20
+<++
+[
+    >>+++++ +++++ w
+    <<-
+]
+>>-.[-]             Displays w and clear
+>+.                 Displays e
+<<<+++
+[
+    >>>>++++++ s
+    >+++       o
+    <<<<<-
+]
+>>>>---.[-]         Displays s and clear
+>++.                Displays o
+--.[-]              Displays m and clear
+<<.[-]              Displays e and clear
+<<<<.
 ================= !
 +.[-]               Displays ! and clear cell
-

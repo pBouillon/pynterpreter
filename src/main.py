@@ -30,9 +30,12 @@ from interpretor import Interpetor
 
 def hello_world() :
     pyint = Interpetor()
-    # pyint.run(code=HELLO_WORLD)
     pyint.run(file='../etc/hello_world.bf')
-    print(pyint)
+
+def sample():
+    pyint = Interpetor()
+    pyint.run(file='../etc/sample.bf')
 
 if __name__ == '__main__':
     hello_world()
+    sample()
