@@ -25,6 +25,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import bf_instructions
+from bf_instructions import EXTENSION
+from bf_instructions import OP_DEC
+from bf_instructions import OP_INC
+from bf_instructions import OP_INP
+from bf_instructions import OP_LOOP_B
+from bf_instructions import OP_LOOP_E
+from bf_instructions import OP_NEXT
+from bf_instructions import OP_PREV
+from bf_instructions import OP_PRINT
+from bf_instructions import OPS
+
 import pathlib
 from pathlib import Path
 
@@ -34,37 +46,6 @@ from sys import stderr
 import time
 from time import time
 
-# Increase current block
-OP_INC    = '+'
-# Decrease current block
-OP_DEC    = '-'
-# Switch to next block
-OP_NEXT   = '>'
-# Switch to previous block
-OP_PREV   = '<'
-# Get user's input
-OP_INP    = ','
-# Print current block 
-OP_PRINT  = '.'
-# First loop delimiter
-OP_LOOP_B = '['
-# Go to the first delimiter if current block != 0
-OP_LOOP_E = ']'
-
-# Primary BF instructions
-OPS = [
-    OP_INC   ,
-    OP_DEC   ,
-    OP_NEXT  ,
-    OP_PREV  ,
-    OP_INP   ,
-    OP_PRINT ,
-    OP_LOOP_B,
-    OP_LOOP_E
-]
-
-# BF extension
-EXTENSION = '.bf'
 # Max loop repetition
 MAX_LOOP  = 200
 # Numbers of blocks
@@ -101,7 +82,7 @@ class Interpetor:
         tostr += '\n-----'
         return tostr
 
-    def __abort (self, msg, errcode) :
+    def __abort (self, msg : str, errcode : int) :
         errmsg = 'Error: ' + msg
         print (errmsg, file=stderr)
         exit (errcode)
