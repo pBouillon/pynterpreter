@@ -67,8 +67,8 @@ MAX_LOOP  = 200
 # Numbers of blocks
 SIZE      = 16
 
-class Interpetor:
-    """References Interpretor
+class Interpreter:
+    """References Interpreter
 
     Attributes:
         __max_loop : max loop repetition
@@ -78,7 +78,7 @@ class Interpetor:
         __tokens   : token parsed
     """
     def __init__ (self, limit=MAX_LOOP, size=SIZE):
-        """Initialize the interpretor
+        """Initialize the interpreter
 
         limit and size are optionnal
         """
@@ -88,6 +88,8 @@ class Interpetor:
         self.__code   = []
         self.__vals   = [0 for _ in range(self.__tab_size)]
         self.__tokens = []
+
+        self.__check_interpreter()
 
     def __str__ (self):
         """Show blocks state
@@ -99,6 +101,8 @@ class Interpetor:
         return tostr
 
     def __abort (self, errcode : int) :
+        """
+        """
         errmsg = 'Error: ' + ERR_DICT[errcode]
         print (errmsg, file=stderr)
         exit (errcode)
@@ -176,7 +180,9 @@ class Interpetor:
                     continue
 
             step += 1
-        print ('Output:\n\t' + prog_output)
+
+        if prog_output:
+            print ('Output:\n\t' + prog_output)
 
     def __tokenize (self):
         """Get all tokens
@@ -199,8 +205,6 @@ class Interpetor:
     def run (self, code='', file=''):
         """Run the BF code
         """
-        self.__check_interpreter()
-
         beg = time()
 
         if file and code:
@@ -222,4 +226,4 @@ class Interpetor:
 
         self.__tokenize()
         self.__execute()
-        print ('Finished in {} ms.'.format(time() - beg))
+        print ('Finished in {0:.3f} ms.'.format(time() - beg))

@@ -24,11 +24,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
-import exceptions.messages
-from exceptions.messages import EXC_CODE_CELL
-from exceptions.messages import EXC_CODE_LOOP
-from exceptions.messages import EXC_DICT
-
-import exceptions.initialization_exception
-from exceptions.initialization_exception import InitializationException

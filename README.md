@@ -1,31 +1,56 @@
 # pynterpreter
-Small Brainfuck interpreter in Python3.
+Small Brainfuck interpreter in Python3.X
 
 ## usage
-Specify source path or paste raw your BF code:
+### from a source file
+code
 ```python3
-pyint = Interpetor()
+pyint = Interpreter()
 pyint.run(file='etc/hello_world.bf')
 ```
-or
+out:
+```shell
+Output:
+	Hello World!
+Finished in 0.002 ms.
+```
+
+### raw code as parameter
+code
 ```python3
-pyint = Interpetor()
+pyint = Interpreter()
 pyint.run(code='>+')
 ```
+out:
+```shell
+Finished in 0.000 ms.
+```
+
+### show status
 To print your 'memory' status, just print the interpreter's object:
 ```python3
-max_loop = 300
-mem_cell = 64
-pyint = Interpetor(limit=max_loop, size=mem_cell)
+mem_cell = 8
+pyint = Interpreter(size=mem_cell)
+pyint.run(file='etc/hello_world.bf')
 print(pyint)
-pyint.run(file='etc/sample.bf')
-print(pyint)
+```
+out:
+```shell
+Output:
+	Hello World!
+Finished in 0.002 ms.
+
+-----
+Memory tab :
+| 0 | 87 | 100 | 33 | 10 | 0 | 0 | 0 | 
+-----
 ```
 
 ## improvements
 - [ ] arg parser for source file
 - [x] better exception/error handling
 - [ ] interpreter in CLI
+- [x] unit testing
 
 ## contributions
 All contributions are welcome !

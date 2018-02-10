@@ -25,11 +25,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import interpretor
-from interpretor import Interpetor
+import interpreter
+from interpreter import Interpreter
 
 def hello_world():
-    pyint   = Interpetor()
+    mem_cell = 8
+    pyint = Interpreter(size=mem_cell)
     pyint.run(file='../etc/hello_world.bf')
 
 if __name__ == '__main__':
