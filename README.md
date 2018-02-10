@@ -3,12 +3,10 @@ Small Brainfuck interpreter in Python3.X
 
 ## usage
 ### from a source file
-code
 ```python3
 pyint = Interpreter()
-pyint.run(file='etc/hello_world.bf')
+pyint.run(file='etc/hello_world.bf') # specify the source
 ```
-out:
 ```shell
 Output:
 	Hello World!
@@ -16,25 +14,21 @@ Finished in 0.002 ms.
 ```
 
 ### raw code as parameter
-code
 ```python3
 pyint = Interpreter()
-pyint.run(code='>+')
+pyint.run(code='>+') # put it raw or from a str var
 ```
-out:
 ```shell
 Finished in 0.000 ms.
 ```
 
-### show status
-To print your 'memory' status, just print the interpreter's object:
+### cells status
 ```python3
 mem_cell = 8
 pyint = Interpreter(size=mem_cell)
 pyint.run(file='etc/hello_world.bf')
-print(pyint)
+print(pyint) # print cells and their values
 ```
-out:
 ```shell
 Output:
 	Hello World!
