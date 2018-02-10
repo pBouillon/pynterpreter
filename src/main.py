@@ -4,7 +4,7 @@
 """
 MIT License
 
-Copyright (c) 2018 Pierre Bouillon
+Copyright (c) 2018 Pierre Bouillon [https://pierrebouillon.tech/]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,19 +28,9 @@ SOFTWARE.
 import interpretor
 from interpretor import Interpetor
 
-def hello_world() :
-    pyint = Interpetor()
+def hello_world():
+    pyint   = Interpetor()
     pyint.run(file='../etc/hello_world.bf')
-
-def hello_world_code():
-    pyint = Interpetor()
-    pyint.run(code='++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.')
-
-def sample():
-    pyint = Interpetor()
-    pyint.run(file='../etc/sample.bf')
 
 if __name__ == '__main__':
     hello_world()
-    hello_world_code()
-    sample()

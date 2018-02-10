@@ -25,34 +25,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Increase current block
-OP_INC    = '+'
-# Decrease current block
-OP_DEC    = '-'
-# Switch to next block
-OP_NEXT   = '>'
-# Switch to previous block
-OP_PREV   = '<'
-# Get user's input
-OP_INP    = ','
-# Print current block 
-OP_PRINT  = '.'
-# First loop delimiter
-OP_LOOP_B = '['
-# Go to the first delimiter if current block != 0
-OP_LOOP_E = ']'
+EXC_CODE_LOOP = 1
+EXC_CODE_CELL = 2
 
-# Primary BF instructions
-OPS = [
-    OP_INC   ,
-    OP_DEC   ,
-    OP_NEXT  ,
-    OP_PREV  ,
-    OP_INP   ,
-    OP_PRINT ,
-    OP_LOOP_B,
-    OP_LOOP_E
-]
-
-# BF extension
-EXTENSION = '.bf'
+EXC_DICT = {
+    EXC_CODE_LOOP : 'Bad loop limitation',
+    EXC_CODE_CELL : 'Bad cells amount'
+}

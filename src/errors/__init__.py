@@ -25,34 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Increase current block
-OP_INC    = '+'
-# Decrease current block
-OP_DEC    = '-'
-# Switch to next block
-OP_NEXT   = '>'
-# Switch to previous block
-OP_PREV   = '<'
-# Get user's input
-OP_INP    = ','
-# Print current block 
-OP_PRINT  = '.'
-# First loop delimiter
-OP_LOOP_B = '['
-# Go to the first delimiter if current block != 0
-OP_LOOP_E = ']'
-
-# Primary BF instructions
-OPS = [
-    OP_INC   ,
-    OP_DEC   ,
-    OP_NEXT  ,
-    OP_PREV  ,
-    OP_INP   ,
-    OP_PRINT ,
-    OP_LOOP_B,
-    OP_LOOP_E
-]
-
-# BF extension
-EXTENSION = '.bf'
+import errors.errors
+from errors.errors import ERR_CODE_NOT_FILE
+from errors.errors import ERR_CODE_NOT_SOURCE
+from errors.errors import ERR_CODE_FILE_MISSING
+from errors.errors import ERR_CODE_BRACK_INCORR
+from errors.errors import ERR_CODE_BRACK_MISSING
+from errors.errors import ERR_LOOP_TOO_MANY_TIME
+from errors.errors import ERR_DICT

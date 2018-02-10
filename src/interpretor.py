@@ -4,7 +4,7 @@
 """
 MIT License
 
-Copyright (c) 2018 Pierre Bouillon
+Copyright (c) 2018 Pierre Bouillon [https://pierrebouillon.tech/]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,10 +37,26 @@ from bf_instructions import OP_PREV
 from bf_instructions import OP_PRINT
 from bf_instructions import OPS
 
+import errors
+from errors import ERR_CODE_NOT_FILE
+from errors import ERR_CODE_NOT_SOURCE
+from errors import ERR_CODE_FILE_MISSING
+from errors import ERR_CODE_BRACK_INCORR
+from errors import ERR_CODE_BRACK_MISSING
+from errors import ERR_LOOP_TOO_MANY_TIME
+from errors import ERR_DICT
+
+import exceptions
+from exceptions import EXC_DICT
+from exceptions import EXC_CODE_CELL
+from exceptions import EXC_CODE_LOOP
+from exceptions import InitializationException
+
 import pathlib
 from pathlib import Path
 
 import sys
+from sys import maxsize
 from sys import stderr
 
 import time
@@ -70,7 +86,7 @@ class Interpetor:
         self.__tab_size = size
 
         self.__code   = []
-        self.__vals   = [0 for x in range(self.__tab_size)]
+        self.__vals   = [0 for _ in range(self.__tab_size)]
         self.__tokens = []
 
     def __str__ (self):
@@ -82,17 +98,32 @@ class Interpetor:
         tostr += '\n-----'
         return tostr
 
-    def __abort (self, msg : str, errcode : int) :
-        errmsg = 'Error: ' + msg
+    def __abort (self, errcode : int) :
+        errmsg = 'Error: ' + ERR_DICT[errcode]
         print (errmsg, file=stderr)
         exit (errcode)
+
+    def __check_interpreter(self) :
+        """Ensure that the values are correctly set
+        """
+        if not 0 < self.__max_loop < maxsize:
+            raise InitializationException (
+                EXC_DICT[EXC_CODE_LOOP], 
+                EXC_CODE_LOOP
+            )
+
+        if not 0 < self.__tab_size < maxsize:
+            raise InitializationException (
+                EXC_DICT[EXC_CODE_CELL], 
+                EXC_CODE_CELL
+            )
 
     def __execute (self):
         """Run the tokenized code
         """
         index      = step    = loop = 0
         beg_ind    = end_ind = -1
-        prog_print = ''
+        prog_output = ''
 
         while step < len(self.__tokens):
             token = self.__tokens[step]
@@ -100,35 +131,42 @@ class Interpetor:
             # Currrent token is +
             if token == OP_INC:
                 self.__vals[index] += 1
+
             # Currrent token is -
             elif token == OP_DEC:
                 self.__vals[index] -= 1
+
             # Currrent token is >
             elif token == OP_NEXT:
                 index += 1
                 if index == self.__tab_size:
                     index = 0
+
             # Currrent token is <
             elif token == OP_PREV:
                 index -= 1
                 if index == -1 :
                     index = self.__tab_size - 1
+
             # Currrent token is ,
             elif token == OP_INP:
                 entry = input()
                 self.__vals[index] = ord(entry)
+
             # Currrent token is ,
             elif token == OP_PRINT:
                 content = chr(self.__vals[index])
-                prog_print += content
+                prog_output += content
+
             # Currrent token is [
             elif token == OP_LOOP_B:
                 beg_ind = step 
                 end_ind = [i for i,x in enumerate(self.__tokens) if x == OP_LOOP_E][0]
+            
             # Currrent token is ]
             elif token == OP_LOOP_E:
                 if loop == self.__max_loop:
-                    self.__abort('looped too many times', 1)
+                    self.__abort (ERR_LOOP_TOO_MANY_TIME)
                 if self.__vals[index] == 0:
                     beg_ind = end_ind = -1
                     loop = 0
@@ -136,33 +174,33 @@ class Interpetor:
                     step = beg_ind
                     loop += 1
                     continue
+
             step += 1
-        print (
-            'Output:\n\t' +
-            prog_print
-        )
+        print ('Output:\n\t' + prog_output)
 
     def __tokenize (self):
         """Get all tokens
         """
         l_b = l_e = 0
         for c in self.__code:
-            if c not in OPS:
-                self.__abort ('Unknown symbol:' + c , 1)
-            self.__tokens.append(c)
+            if c in OPS:
+                self.__tokens.append(c)
+
         for t in self.__tokens:
             if t == OP_LOOP_B:
                 l_b += 1
             if t == OP_LOOP_E:
                 l_e += 1
             if l_e > l_b:
-                self.__abort ('loop closed before opened', 1)
+                self.__abort (ERR_CODE_BRACK_INCORR)
         if l_e != l_b:
-            self.__abort ('missing brackets', 1)
+            self.__abort (ERR_CODE_BRACK_MISSING)
 
     def run (self, code='', file=''):
         """Run the BF code
         """
+        self.__check_interpreter()
+
         beg = time()
 
         if file and code:
@@ -172,17 +210,13 @@ class Interpetor:
             source = Path(file)
             if source.exists() :
                 if not source.is_file():
-                    self.__abort ('Source is not a file', 1)
+                    self.__abort (ERR_CODE_NOT_FILE)
                 if file[len(file) - 3 :] != EXTENSION:
-                    self.__abort ('Source is not a BF file', 1)
+                    self.__abort (ERR_CODE_NOT_SOURCE)
                 with source.open() as f:
                     self.__code = f.read()
-                # clearing code
-                self.__code = ''.join (
-                    [c for c in self.__code if c in OPS]
-                )
             else:
-                self.__abort ('File does not exists', 1)
+                self.__abort (ERR_CODE_FILE_MISSING)
         else :        
             self.__code = code
 
