@@ -3,7 +3,7 @@ Small Brainfuck interpreter in Python3.X
 
 ## usage
 ### from a source file
-```python3
+```python
 pyint = Interpreter()
 pyint.run(file='etc/hello_world.bf') # specify the source
 ```
@@ -14,7 +14,7 @@ Finished in 0.002 ms.
 ```
 
 ### raw code as parameter
-```python3
+```python
 pyint = Interpreter()
 pyint.run(code='>+') # put it raw or from a str var
 ```
@@ -23,7 +23,7 @@ Finished in 0.000 ms.
 ```
 
 ### cells status
-```python3
+```python
 mem_cell = 8
 pyint = Interpreter(size=mem_cell)
 pyint.run(file='etc/hello_world.bf')
