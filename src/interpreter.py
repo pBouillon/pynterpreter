@@ -107,7 +107,7 @@ class Interpreter:
         print (errmsg, file=stderr)
         exit (errcode)
 
-    def __check_interpreter(self) :
+    def __check_interpreter (self) :
         """Ensure that the values are correctly set
         """
         if not 0 < self.__max_loop < maxsize:

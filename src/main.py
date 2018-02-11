@@ -25,13 +25,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import argparse
+from argparse import ArgumentParser
+
 import interpreter
 from interpreter import Interpreter
 
-def hello_world():
-    mem_cell = 8
-    pyint = Interpreter(size=mem_cell)
-    pyint.run(file='../etc/hello_world.bf')
+
+PROG_DESC = """
+    Brainfuck interpreter written in Python3.X
+    See https://github.com/pBouillon/pynterpreter.git
+"""
+
+
+def parse_args():
+    """
+    """
+    parser = ArgumentParser (description = PROG_DESC)
+
+    group = parser.add_mutually_exclusive_group (required = True)
+    group.add_argument (
+        '-c', 
+        '--code', 
+        help = 'Raw BF code'
+    )
+    group.add_argument (
+        '-f', 
+        '--file', 
+        help = 'Path to BF source'
+    )
+
+    args = vars(parser.parse_args())
 
 if __name__ == '__main__':
-    hello_world()
+    args = parse_args()
+
+    pyint = Interpreter()
+    if args['code']:
+        pyint.run (code = args['code'])
+    elif args['file']:
+        pyint.run (file = argparse['file'])
