@@ -43,7 +43,7 @@ def parse_args():
     """
     parser = ArgumentParser (description = PROG_DESC)
 
-    group = parser.add_mutually_exclusive_group (required = True)
+    group = parser.add_mutually_exclusive_group ()
     group.add_argument (
         '-c', 
         '--code', 
@@ -55,13 +55,21 @@ def parse_args():
         help = 'Path to BF source'
     )
 
-    args = vars(parser.parse_args())
+    return vars(parser.parse_args())
 
 if __name__ == '__main__':
     args = parse_args()
 
     pyint = Interpreter()
+
+    # execute raw code
     if args['code']:
         pyint.run (code = args['code'])
+
+    # execute code from file
     elif args['file']:
         pyint.run (file = argparse['file'])
+
+    # cli
+    else:
+        print('No arg provided, see -h')
