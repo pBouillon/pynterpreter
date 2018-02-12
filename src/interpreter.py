@@ -100,7 +100,7 @@ class Interpreter:
         tostr += '\n-----'
         return tostr
 
-    def __abort (self, errcode : int) :
+    def __abort (self, errcode : int) -> None :
         """
         """
         errmsg = 'Error: ' + ERR_DICT[errcode]

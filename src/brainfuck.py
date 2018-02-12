@@ -58,17 +58,20 @@ def parse_args():
     return vars(parser.parse_args())
 
 if __name__ == '__main__':
-    args = parse_args()
+    args   = parse_args()
+    code   = args['code']
+    source = args['file']
+
 
     pyint = Interpreter()
 
     # execute raw code
-    if args['code']:
-        pyint.run (code = args['code'])
+    if code:
+        pyint.run (code = code)
 
     # execute code from file
-    elif args['file']:
-        pyint.run (file = argparse['file'])
+    elif source:
+        pyint.run (file = source)
 
     # cli
     else:
