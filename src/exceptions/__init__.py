@@ -28,7 +28,13 @@ SOFTWARE.
 import exceptions.messages
 from exceptions.messages import EXC_CODE_CELL
 from exceptions.messages import EXC_CODE_LOOP
+from exceptions.messages import EXC_CODE_BRAC_M
+from exceptions.messages import EXC_CODE_BRAC_I
+from exceptions.messages import EXC_CODE_LOOP_M
 from exceptions.messages import EXC_DICT
 
 import exceptions.initialization_exception
 from exceptions.initialization_exception import InitializationException
+
+import exceptions.execution_exception
+from exceptions.execution_exception import ExecutionException

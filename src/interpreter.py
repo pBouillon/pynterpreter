@@ -41,15 +41,16 @@ import errors
 from errors import ERR_CODE_NOT_FILE
 from errors import ERR_CODE_NOT_SOURCE
 from errors import ERR_CODE_FILE_MISSING
-from errors import ERR_CODE_BRACK_INCORR
-from errors import ERR_CODE_BRACK_MISSING
-from errors import ERR_LOOP_TOO_MANY_TIME
 from errors import ERR_DICT
 
 import exceptions
 from exceptions import EXC_DICT
 from exceptions import EXC_CODE_CELL
 from exceptions import EXC_CODE_LOOP
+from exceptions import EXC_CODE_BRAC_M
+from exceptions import EXC_CODE_BRAC_I
+from exceptions import EXC_CODE_LOOP_M
+from exceptions import ExecutionException
 from exceptions import InitializationException
 
 import pathlib
@@ -94,10 +95,9 @@ class Interpreter:
     def __str__ (self):
         """Show blocks state
         """
-        tostr = '-----\nMemory tab :\n| '
+        tostr = '| '
         for x in self.__vals:
             tostr += str(x) + ' | '
-        tostr += '\n-----'
         return tostr
 
     def __abort (self, errcode : int) -> None :
@@ -154,7 +154,7 @@ class Interpreter:
 
             # Currrent token is ,
             elif token == OP_INP:
-                entry = input()
+                entry = input('bf input: ')
                 self.__vals[index] = ord(entry)
 
             # Currrent token is ,
@@ -170,7 +170,10 @@ class Interpreter:
             # Currrent token is ]
             elif token == OP_LOOP_E:
                 if loop == self.__max_loop:
-                    self.__abort (ERR_LOOP_TOO_MANY_TIME)
+                    raise ExecutionException (
+                        EXC_DICT[EXC_CODE_LOOP_M], 
+                        EXC_CODE_LOOP_M
+                    )
                 if self.__vals[index] == 0:
                     beg_ind = end_ind = -1
                     loop = 0
@@ -198,14 +201,25 @@ class Interpreter:
             if t == OP_LOOP_E:
                 l_e += 1
             if l_e > l_b:
-                self.__abort (ERR_CODE_BRACK_INCORR)
+                raise ExecutionException (
+                    EXC_DICT[EXC_CODE_BRAC_I], 
+                    EXC_CODE_BRAC_I
+                )
         if l_e != l_b:
-            self.__abort (ERR_CODE_BRACK_MISSING)
+            raise ExecutionException (
+                    EXC_DICT[EXC_CODE_BRAC_M], 
+                    EXC_CODE_BRAC_M
+            )
 
     def clear_cells(self):
         """
         """
         self.__vals = [0 for _ in range(self.__tab_size)]
+
+    def clear_tokens(self):
+        """
+        """
+        self.__tokens = []
 
     def get_lim(self):
         """

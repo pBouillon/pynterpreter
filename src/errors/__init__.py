@@ -29,7 +29,4 @@ import errors.errors
 from errors.errors import ERR_CODE_NOT_FILE
 from errors.errors import ERR_CODE_NOT_SOURCE
 from errors.errors import ERR_CODE_FILE_MISSING
-from errors.errors import ERR_CODE_BRACK_INCORR
-from errors.errors import ERR_CODE_BRACK_MISSING
-from errors.errors import ERR_LOOP_TOO_MANY_TIME
 from errors.errors import ERR_DICT

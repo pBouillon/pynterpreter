@@ -30,17 +30,8 @@ ERR_CODE_NOT_FILE      = 1
 ERR_CODE_NOT_SOURCE    = 2
 ERR_CODE_FILE_MISSING  = 3
 
-ERR_CODE_BRACK_INCORR  = 4
-ERR_CODE_BRACK_MISSING = 5
-
-ERR_LOOP_TOO_MANY_TIME = 6
-
-
 ERR_DICT = {
 	ERR_CODE_NOT_FILE   : "Source is not a file",
 	ERR_CODE_NOT_SOURCE : 'Source is not a BF file',
-	ERR_CODE_FILE_MISSING  : 'File does not exists',
-	ERR_CODE_BRACK_INCORR  : 'Loop closed before opened',
-	ERR_CODE_BRACK_MISSING : 'Missing brackets',
-	ERR_LOOP_TOO_MANY_TIME : 'Looped too many times'
+	ERR_CODE_FILE_MISSING  : 'File does not exists'
 }

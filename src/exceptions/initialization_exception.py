@@ -31,3 +31,4 @@ class InitializationException(Exception):
     def __init__(self, msg, errcode):
         super().__init__(msg)
         self.errcode = errcode
+        self.msg = msg

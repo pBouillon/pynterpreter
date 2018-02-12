@@ -25,16 +25,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-EXC_CODE_LOOP   = 1
-EXC_CODE_CELL   = 2
-EXC_CODE_BRAC_M = 3
-EXC_CODE_BRAC_I = 4
-EXC_CODE_LOOP_M = 5
-
-EXC_DICT = {
-    EXC_CODE_LOOP   : 'Bad loop limitation',
-    EXC_CODE_CELL   : 'Bad cells amount',
-    EXC_CODE_BRAC_M : 'Missing brackets',
-    EXC_CODE_BRAC_I : 'Incorrect bracket usage',
-    EXC_CODE_LOOP_M : 'Looped too many times',
-}
+class ExecutionException(Exception):
+    """
+    """
+    def __init__(self, msg, errcode):
+        super().__init__(msg)
+        self.errcode = errcode
+        self.msg = msg
