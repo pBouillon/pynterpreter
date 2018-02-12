@@ -3,47 +3,53 @@ Small Brainfuck interpreter in Python3.X
 
 ## usage
 ### from a source file
-```python
-pyint = Interpreter()
-pyint.run(file='etc/hello_world.bf') # specify the source
-```
 ```shell
+~$ python3 path/src/brainfuck.py -f etc/hello_world.bf
 Output:
-	Hello World!
-Finished in 0.002 ms.
+    Hello World!
+Finished in 0.051 ms.
 ```
 
 ### raw code as parameter
-```python
-pyint = Interpreter()
-pyint.run(code='>+') # put it raw or from a str var
-```
 ```shell
+~$ python3 path/src/brainfuck.py -c "+++[>++++++++++<-]>+++."
+Output:
+    !
 Finished in 0.000 ms.
 ```
 
-### cells status
-```python
-mem_cell = 8
-pyint = Interpreter(size=mem_cell)
-pyint.run(file='etc/hello_world.bf')
-print(pyint) # print cells and their values
-```
+### cli usage
 ```shell
-Output:
-	Hello World!
-Finished in 0.002 ms.
+~$ python3 path/src/brainfuck.py
 
------
-Memory tab :
-| 0 | 87 | 100 | 33 | 10 | 0 | 0 | 0 | 
------
+*********************************************************
+* Brainfuck interpreter written in Python 3             *
+*                                                       *
+* Author: pBouillon (https://pierrebouillon.tech/)      *
+* See:    https://github.com/pBouillon/pynterpreter.git *
+*********************************************************
+
+pynterpreter> _
+```
+see `/help` to have an overview of available commands:
+```shell
+pynterpreter> /help
+    /help  ......... displays help
+    /size  ......... change tab size
+    /clear ......... clear memory cells
+    /loop  ......... change max loop limit
+    /show  ......... show cells status
+    /quit  ......... exit CLI
+
+pynterpreter> _
 ```
 
 ## improvements
-- [ ] arg parser for source file
+- [x] arg parser for source file
 - [x] better exception/error handling
-- [ ] interpreter in CLI
+- [ ] comments
+- [x] interpreter in CLI
+- [ ] nested loops
 - [x] unit testing
 
 ## contributions
