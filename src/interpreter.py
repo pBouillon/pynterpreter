@@ -94,7 +94,7 @@ class Interpreter:
     def __str__ (self):
         """Show blocks state
         """
-        tostr = '\n-----\nMemory tab :\n| '
+        tostr = '-----\nMemory tab :\n| '
         for x in self.__vals:
             tostr += str(x) + ' | '
         tostr += '\n-----'
@@ -202,11 +202,24 @@ class Interpreter:
         if l_e != l_b:
             self.__abort (ERR_CODE_BRACK_MISSING)
 
+    def clear_cells(self):
+        """
+        """
+        self.__vals = [0 for _ in range(self.__tab_size)]
+
+    def get_lim(self):
+        """
+        """
+        return self.__max_loop
+
+    def get_size(self):
+        """
+        """
+        return self.__tab_size
+
     def run (self, code='', file=''):
         """Run the BF code
         """
-        beg = time()
-
         if file and code:
             print ('WARNING: reading file instead of the code')
 
@@ -226,4 +239,14 @@ class Interpreter:
 
         self.__tokenize()
         self.__execute()
-        print ('Finished in {0:.3f} ms.'.format(time() - beg))
+
+    def set_lim(self, new_lim : int):
+        """
+        """
+        self.__max_loop = (new_lim)
+
+    def set_size(self, new_size : int):
+        """
+        """
+        self.__tab_size = new_size
+        self.__vals = [0 for _ in range(self.__tab_size)]

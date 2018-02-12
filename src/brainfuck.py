@@ -28,8 +28,14 @@ SOFTWARE.
 import argparse
 from argparse import ArgumentParser
 
+import cli
+from cli import CLI
+
 import interpreter
 from interpreter import Interpreter
+
+import time
+from time import time
 
 
 PROG_DESC = """
@@ -67,12 +73,17 @@ if __name__ == '__main__':
 
     # execute raw code
     if code:
+        beg = time()
         pyint.run (code = code)
+        print ('Finished in {0:.3f} ms.'.format(time() - beg))
 
     # execute code from file
     elif source:
+        beg = time()
         pyint.run (file = source)
+        print ('Finished in {0:.3f} ms.'.format(time() - beg))
 
     # cli
     else:
-        print('No arg provided, see -h')
+        cli = CLI()
+        cli.run()
