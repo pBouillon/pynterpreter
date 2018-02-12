@@ -35,12 +35,13 @@ from interpreter import Interpreter
 COLOR_END     = '\033[0m'
 COLOR_FAIL    = '\033[91m'
 COLOR_OKGREEN = '\033[92m'
-COLOR_INFO = '\033[93m'
+COLOR_INFO    = '\033[93m'
 
 CMD_CLS  = 'clear'
+CMD_CFG  = 'cfg'
 CMD_HELP = 'help'
 CMD_QUIT = 'quit'
-CMD_LOOP = 'loop'
+CMD_LIMIT = 'limit'
 CMD_SIZE = 'size'
 CMD_SHOW = 'show'
 
@@ -49,25 +50,27 @@ DEFAULT_PREFIX = '/'
 DEFAULT_ANSW   = 'Bad command, please see ' + \
                     DEFAULT_PREFIX + \
                     CMD_HELP
+DEFAULT_TAB_SP = 4
 
 EXIT_SUCCESS   = 0
 
 HELPER = '''\
-    /help  ......... displays help
-    /size  ......... change tab size
     /clear ......... clear memory cells
-    /loop  ......... change max loop limit
-    /show  ......... show cells status
+    /cfg   ......... show interpreter's configuration
+    /help  ......... displays help
+    /limit ......... change max limit limit
     /quit  ......... exit CLI
+    /show  ......... show cells status
+    /size  ......... change tab size
 '''
 
 WELCOME = '''
-*********************************************************
-* Brainfuck interpreter written in Python 3             *
-*                                                       *
-* Author: pBouillon (https://pierrebouillon.tech/)      *
-* See:    https://github.com/pBouillon/pynterpreter.git *
-*********************************************************
+\t*********************************************************
+\t* Brainfuck interpreter written in Python 3             *
+\t*                                                       *
+\t* Author: pBouillon (https://pierrebouillon.tech/)      *
+\t* See:    https://github.com/pBouillon/pynterpreter.git *
+\t*********************************************************
 '''
 
 
@@ -92,7 +95,13 @@ class CLI:
             # input is BF code
             else:
                 try:
-                    self.__inter.run(code = usr_in)
+                    out = self.__inter.run(code = usr_in)
+                    if out:
+                        print (
+                            COLOR_INFO +
+                            out +
+                            COLOR_END
+                        )
                 except ExecutionException as e:
                     print (
                         COLOR_FAIL + 
@@ -114,11 +123,15 @@ class CLI:
         """
         # helper
         if cmd == CMD_HELP:
-            print (COLOR_INFO + HELPER + COLOR_END)
+            print (
+                COLOR_INFO + 
+                HELPER.expandtabs(DEFAULT_TAB_SP) + 
+                COLOR_END
+            )
 
         # changing size
         elif cmd == CMD_SIZE:
-            msg = '\tCurrent size is {}. New size: '
+            msg = 'New size (current: {}): '
             msg =  msg.format(self.__inter.get_size())
             
             new_size = input (msg)
@@ -126,10 +139,11 @@ class CLI:
                 self.__inter.set_size(int(new_size))
             else:
                 print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END)
+            print (COLOR_OKGREEN + 'size updated' + COLOR_END)
         
         # changing limit
-        elif cmd == CMD_LOOP:
-            msg = '\tCurrent limit is {}. New limit: '
+        elif cmd == CMD_LIMIT:
+            msg = 'New limit (current: {}): '
             msg =  msg.format(self.__inter.get_lim())
 
             new_lim = input (msg)
@@ -137,15 +151,32 @@ class CLI:
                 self.__inter.set_lim(int(new_lim))
             else:
                 print (COLOR_FAIL + 'ERROR: bad limit' + COLOR_END)
+            print (COLOR_OKGREEN + 'limit updated' + COLOR_END)
 
         # clearing cells
         elif cmd == CMD_CLS:
-            print (COLOR_OKGREEN + 'cells cleared' + COLOR_END)
             self.__inter.clear_cells()
+            print (COLOR_OKGREEN + 'cells cleared' + COLOR_END)
 
         # show cells
         elif cmd == CMD_SHOW:
-            print(COLOR_INFO + str(self.__inter) + COLOR_END)
+            print (COLOR_INFO + str(self.__inter) + COLOR_END)
+
+        # show interpreter's configuration
+        elif cmd == CMD_CFG:
+            cfg_str = 'Configuration:\n'
+            cfg_str+= '\tlimit: {}\n'
+            cfg_str+= '\tsize : {}'
+            cfg_str = cfg_str.format (
+                    self.__inter.get_lim(),
+                    self.__inter.get_size()
+                )
+
+            print (
+                COLOR_INFO + 
+                cfg_str.expandtabs(DEFAULT_TAB_SP) + 
+                COLOR_END
+            )
 
         # exiting cli
         elif cmd == CMD_QUIT:

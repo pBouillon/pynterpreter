@@ -43,6 +43,25 @@ pynterpreter> /help
 
 pynterpreter> _
 ```
+Example to print `!`:
+```shell
+
+    *********************************************************
+    * Brainfuck interpreter written in Python 3             *
+    *                                                       *
+    * Author: pBouillon (https://pierrebouillon.tech/)      *
+    * See:    https://github.com/pBouillon/pynterpreter.git *
+    *********************************************************
+
+pynterpreter> +++
+pynterpreter> [>+++++ +++++ <-]
+pynterpreter> >+++
+pynterpreter> .
+!
+pynterpreter> /show
+| 0 | [33] | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 
+pynterpreter> _
+```
 
 ## improvements
 - [x] arg parser for source file

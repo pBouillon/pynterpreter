@@ -74,13 +74,15 @@ if __name__ == '__main__':
     # execute raw code
     if code:
         beg = time()
-        pyint.run (code = code)
+        out = pyint.run (code = code)
+        print ('Output:\n\t' + out)
         print ('Finished in {0:.3f} ms.'.format(time() - beg))
 
     # execute code from file
     elif source:
         beg = time()
-        pyint.run (file = source)
+        out = pyint.run (file = source)
+        print ('Output:\n\t' + out)
         print ('Finished in {0:.3f} ms.'.format(time() - beg))
 
     # cli

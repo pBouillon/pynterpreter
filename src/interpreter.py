@@ -86,6 +86,7 @@ class Interpreter:
         self.__max_loop = limit
         self.__tab_size = size
 
+        self.__ptr    = 0
         self.__code   = []
         self.__vals   = [0 for _ in range(self.__tab_size)]
         self.__tokens = []
@@ -96,8 +97,13 @@ class Interpreter:
         """Show blocks state
         """
         tostr = '| '
-        for x in self.__vals:
-            tostr += str(x) + ' | '
+        for x in range(self.__tab_size) :
+            val = self.__vals[x]
+            if x == self.__ptr:
+                tostr += '[' + str(val) + ']'
+            else:
+                tostr += str(val)
+            tostr += ' | '
         return tostr
 
     def __abort (self, errcode : int) -> None :
@@ -125,8 +131,9 @@ class Interpreter:
     def __execute (self):
         """Run the tokenized code
         """
-        index      = step    = loop = 0
-        beg_ind    = end_ind = -1
+        step = 0
+        loop = 0
+        beg_ind = end_ind = -1
         prog_output = ''
 
         while step < len(self.__tokens):
@@ -134,32 +141,32 @@ class Interpreter:
 
             # Currrent token is +
             if token == OP_INC:
-                self.__vals[index] += 1
+                self.__vals[self.__ptr] += 1
 
             # Currrent token is -
             elif token == OP_DEC:
-                self.__vals[index] -= 1
+                self.__vals[self.__ptr] -= 1
 
             # Currrent token is >
             elif token == OP_NEXT:
-                index += 1
-                if index == self.__tab_size:
-                    index = 0
+                self.__ptr += 1
+                if self.__ptr == self.__tab_size:
+                    self.__ptr = 0
 
             # Currrent token is <
             elif token == OP_PREV:
-                index -= 1
-                if index == -1 :
-                    index = self.__tab_size - 1
+                self.__ptr -= 1
+                if self.__ptr == -1 :
+                    self.__ptr = self.__tab_size - 1
 
             # Currrent token is ,
             elif token == OP_INP:
                 entry = input('bf input: ')
-                self.__vals[index] = ord(entry)
+                self.__vals[self.__ptr] = ord(entry)
 
             # Currrent token is ,
             elif token == OP_PRINT:
-                content = chr(self.__vals[index])
+                content = chr(self.__vals[self.__ptr])
                 prog_output += content
 
             # Currrent token is [
@@ -169,23 +176,22 @@ class Interpreter:
             
             # Currrent token is ]
             elif token == OP_LOOP_E:
+                loop += 1
                 if loop == self.__max_loop:
                     raise ExecutionException (
                         EXC_DICT[EXC_CODE_LOOP_M], 
                         EXC_CODE_LOOP_M
                     )
-                if self.__vals[index] == 0:
+                if self.__vals[self.__ptr] == 0:
                     beg_ind = end_ind = -1
                     loop = 0
                 else:
                     step = beg_ind
-                    loop += 1
                     continue
 
             step += 1
 
-        if prog_output:
-            print ('Output:\n\t' + prog_output)
+        return prog_output
 
     def __tokenize (self):
         """Get all tokens
@@ -252,7 +258,7 @@ class Interpreter:
             self.__code = code
 
         self.__tokenize()
-        self.__execute()
+        return self.__execute()
 
     def set_lim(self, new_lim : int):
         """
