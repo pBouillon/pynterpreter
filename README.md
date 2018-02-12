@@ -29,10 +29,6 @@ Finished in 0.000 ms.
 * See:    https://github.com/pBouillon/pynterpreter.git *
 *********************************************************
 
-pynterpreter> _
-```
-see `/help` to have an overview of available commands:
-```shell
 pynterpreter> /help
     /help  ......... displays help
     /size  ......... change tab size
@@ -40,18 +36,6 @@ pynterpreter> /help
     /loop  ......... change max loop limit
     /show  ......... show cells status
     /quit  ......... exit CLI
-
-pynterpreter> _
-```
-Example to print `!`:
-```shell
-
-    *********************************************************
-    * Brainfuck interpreter written in Python 3             *
-    *                                                       *
-    * Author: pBouillon (https://pierrebouillon.tech/)      *
-    * See:    https://github.com/pBouillon/pynterpreter.git *
-    *********************************************************
 
 pynterpreter> +++
 pynterpreter> [>+++++ +++++ <-]
