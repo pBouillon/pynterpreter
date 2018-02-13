@@ -25,7 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import sys
+sys.path.append('../src')
+
 import exceptions
+from exceptions import ExecutionException
 from exceptions import InitializationException
 
 import interpreter
@@ -79,21 +83,21 @@ class InterpreterTest(TestCase) :
     def test_exit_on_incorrect_brack(self):
         """Test incorrect bracket order
         """
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(ExecutionException):
             pyint = Interpreter(limit=1)
             pyint.run(code=BF_INCORRECT_BRACK)
 
     def test_exit_on_infinity_loop(self):
         """Test if infinity loop is avoided
         """
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(ExecutionException):
             pyint = Interpreter()
             pyint.run(code=BF_INFINITY_LOOP)
 
     def test_exit_on_missing_brack(self):
         """Test missing bracket handling
         """
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(ExecutionException):
             pyint = Interpreter(limit=1)
             pyint.run(code=BF_MISSING_BRACK)
 
@@ -143,7 +147,7 @@ class InterpreterTest(TestCase) :
     def test_run_loop_failure(self):
         """Test if the loop limitation is handle
         """
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(ExecutionException):
             pyint = Interpreter(limit=1)
             pyint.run(code=BF_CODE_LOOP_TWICE)
 
