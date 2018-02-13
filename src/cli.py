@@ -137,21 +137,21 @@ class CLI:
             new_size = input (msg)
             if new_size.isdigit():
                 self.__inter.set_size(int(new_size))
+                print (COLOR_OKGREEN + 'size updated' + COLOR_END)
             else:
-                print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END)
-            print (COLOR_OKGREEN + 'size updated' + COLOR_END)
+                print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END
         
         # changing limit
-        elif cmd == CMD_LIMIT:
+        elif cmd == CMD_LIMIT:)
             msg = 'New limit (current: {}): '
             msg =  msg.format(self.__inter.get_lim())
 
             new_lim = input (msg)
             if new_lim.isdigit():
                 self.__inter.set_lim(int(new_lim))
+                print (COLOR_OKGREEN + 'limit updated' + COLOR_END)
             else:
                 print (COLOR_FAIL + 'ERROR: bad limit' + COLOR_END)
-            print (COLOR_OKGREEN + 'limit updated' + COLOR_END)
 
         # clearing cells
         elif cmd == CMD_CLS:
