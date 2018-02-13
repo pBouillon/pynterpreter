@@ -80,21 +80,21 @@ class InterpreterTest(TestCase) :
             found = True
         self.assertFalse(found)
 
-    def test_exit_on_incorrect_brack(self):
+    def test_exc_on_incorrect_brack(self):
         """Test incorrect bracket order
         """
         with self.assertRaises(ExecutionException):
             pyint = Interpreter(limit=1)
             pyint.run(code=BF_INCORRECT_BRACK)
 
-    def test_exit_on_infinity_loop(self):
+    def test_exct_on_infinity_loop(self):
         """Test if infinity loop is avoided
         """
         with self.assertRaises(ExecutionException):
             pyint = Interpreter()
             pyint.run(code=BF_INFINITY_LOOP)
 
-    def test_exit_on_missing_brack(self):
+    def test_exc_on_missing_brack(self):
         """Test missing bracket handling
         """
         with self.assertRaises(ExecutionException):
@@ -144,7 +144,7 @@ class InterpreterTest(TestCase) :
             found = True
         self.assertFalse(found)
 
-    def test_run_loop_failure(self):
+    def test_run_loop_exc(self):
         """Test if the loop limitation is handle
         """
         with self.assertRaises(ExecutionException):
@@ -161,6 +161,24 @@ class InterpreterTest(TestCase) :
         except SystemExit: 
             found = True
         self.assertFalse(found)
+
+    def test_limit_set(self):
+        """Test limit setter
+        """
+        _limit     = 5
+        _new_limit = 6
+        pyint = Interpreter(limit = _limit)
+        pyint.set_lim(_new_limit)
+        self.assertEqual(pyint.get_lim(), _new_limit)
+
+    def test_size_set(self):
+        """test size setter
+        """
+        _size     = 5
+        _new_size = 6
+        pyint = Interpreter(size = _size)
+        pyint.set_size(_new_size)
+        self.assertEqual(pyint.get_size(), _new_size)
 
 if __name__ == '__main__':
     main()
