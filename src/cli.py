@@ -134,10 +134,13 @@ class CLI:
             msg =  msg.format(self.__inter.get_size())
             
             new_size = input (msg)
+            if not new_size.isdigit():
+                print (COLOR_FAIL + 'ERROR: bad type' + COLOR_END)
+                return
             try:
                 self.__inter.set_size(int(new_size))
                 print (COLOR_OKGREEN + 'size updated' + COLOR_END)
-            except InterruptionException as e:
+            except InitializationException as e:
                 print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END)
         
         # changing limit
@@ -146,10 +149,13 @@ class CLI:
             msg =  msg.format(self.__inter.get_lim())
 
             new_lim = input (msg)
+            if not new_lim.isdigit():
+                print (COLOR_FAIL + 'ERROR: bad type' + COLOR_END)
+                return
             try:
                 self.__inter.set_lim(int(new_lim))
                 print (COLOR_OKGREEN + 'limit updated' + COLOR_END)
-            except InterruptionException as e:
+            except InitializationException as e:
                 print (COLOR_FAIL + 'ERROR: bad limit' + COLOR_END)
 
         # clearing cells
