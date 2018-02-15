@@ -61,8 +61,7 @@ HELPER = '''\
     /limit ......... change max limit limit
     /quit  ......... exit CLI
     /show  ......... show cells status
-    /size  ......... change tab size
-'''
+    /size  ......... change tab size'''
 
 WELCOME = '''
 \t*********************************************************
@@ -131,26 +130,26 @@ class CLI:
 
         # changing size
         elif cmd == CMD_SIZE:
-            msg = 'New size (current: {}): '
+            msg = '\tNew size (current: {}): '
             msg =  msg.format(self.__inter.get_size())
             
             new_size = input (msg)
-            if new_size.isdigit():
+            try:
                 self.__inter.set_size(int(new_size))
                 print (COLOR_OKGREEN + 'size updated' + COLOR_END)
-            else:
+            except InterruptionException as e:
                 print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END)
         
         # changing limit
-        elif cmd == CMD_LIMIT:)
-            msg = 'New limit (current: {}): '
+        elif cmd == CMD_LIMIT:
+            msg = '\tNew limit (current: {}): '
             msg =  msg.format(self.__inter.get_lim())
 
             new_lim = input (msg)
-            if new_lim.isdigit():
+            try:
                 self.__inter.set_lim(int(new_lim))
                 print (COLOR_OKGREEN + 'limit updated' + COLOR_END)
-            else:
+            except InterruptionException as e:
                 print (COLOR_FAIL + 'ERROR: bad limit' + COLOR_END)
 
         # clearing cells

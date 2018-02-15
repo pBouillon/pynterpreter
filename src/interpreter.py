@@ -116,13 +116,13 @@ class Interpreter:
     def __check_interpreter (self) :
         """Ensure that the values are correctly set
         """
-        if not 0 < self.__max_loop < maxsize:
+        if not 0 < self.__max_loop < maxsize or not self.__max_loop.isdigit():
             raise InitializationException (
                 EXC_DICT[EXC_CODE_LOOP], 
                 EXC_CODE_LOOP
             )
 
-        if not 0 < self.__tab_size < maxsize:
+        if not 0 < self.__tab_size < maxsize or not self.__tab_size.isdigit():
             raise InitializationException (
                 EXC_DICT[EXC_CODE_CELL], 
                 EXC_CODE_CELL
@@ -172,7 +172,7 @@ class Interpreter:
             # Currrent token is [
             elif token == OP_LOOP_B:
                 beg_ind = step 
-                end_ind = [i for i,x in enumerate(self.__tokens) if x == OP_LOOP_E][0]
+                end_ind = [i for i, x in enumerate(self.__tokens) if x == OP_LOOP_E][0]
             
             # Currrent token is ]
             elif token == OP_LOOP_E:
@@ -186,7 +186,7 @@ class Interpreter:
                     beg_ind = end_ind = -1
                     loop = 0
                 else:
-                    step = beg_ind
+                    step = beg_in
                     continue
 
             step += 1
@@ -260,13 +260,15 @@ class Interpreter:
         self.__tokenize()
         return self.__execute()
 
-    def set_lim(self, new_lim : int):
+    def set_lim(self, new_lim):
         """
         """
         self.__max_loop = (new_lim)
+        self.__check_interpreter()
 
-    def set_size(self, new_size : int):
+    def set_size(self, new_size):
         """
         """
         self.__tab_size = new_size
+        self.__check_interpreter()
         self.__vals = [0 for _ in range(self.__tab_size)]
