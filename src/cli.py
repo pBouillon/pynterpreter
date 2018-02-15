@@ -74,27 +74,27 @@ WELCOME = '''
 
 
 class CLI:
-    """
-    """
-    def __init__(self):
+    @staticmethod
+    def poll(interpreter):
         """
         """
-        self.__inter = Interpreter()
-
-    def run(self):
-        """
-        """
-        print (WELCOME)
         while True:
             usr_in = input(DEFAULT_OUTPUT)
 
             # input is a command
             if usr_in.startswith(DEFAULT_PREFIX) :
-                self.__run_cmd(usr_in[1:])
+                try:
+                    CLI.__run_cmd(usr_in[1:], interpreter)
+                except KeyboardInterrupt:
+                    print (
+                        COLOR_FAIL +
+                        '\nCommand canceled' +
+                        COLOR_END
+                    )
             # input is BF code
             else:
                 try:
-                    out = self.__inter.run(code = usr_in)
+                    out = interpreter.run(code = usr_in)
                     if out:
                         print (
                             COLOR_INFO +
@@ -115,9 +115,22 @@ class CLI:
                         COLOR_END
                     )
                 finally:
-                    self.__inter.clear_tokens()
+                    interpreter.clear_tokens()
 
-    def __run_cmd(self, cmd):
+    @staticmethod
+    def run(interpreter):
+        """
+        """
+        print (WELCOME)
+        try:
+            CLI.poll(interpreter)
+        except KeyboardInterrupt:
+            # properly exit on terminal display
+            print ('')
+        
+
+    @staticmethod
+    def __run_cmd(cmd, interpreter):
         """
         """
         # helper
@@ -131,14 +144,14 @@ class CLI:
         # changing size
         elif cmd == CMD_SIZE:
             msg = '\tNew size (current: {}): '
-            msg =  msg.format(self.__inter.get_size())
+            msg =  msg.format(interpreter.get_size())
             
             new_size = input (msg)
             if not new_size.isdigit():
                 print (COLOR_FAIL + 'ERROR: bad type' + COLOR_END)
                 return
             try:
-                self.__inter.set_size(int(new_size))
+                interpreter.set_size(int(new_size))
                 print (COLOR_OKGREEN + 'size updated' + COLOR_END)
             except InitializationException as e:
                 print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END)
@@ -146,26 +159,26 @@ class CLI:
         # changing limit
         elif cmd == CMD_LIMIT:
             msg = '\tNew limit (current: {}): '
-            msg =  msg.format(self.__inter.get_lim())
+            msg =  msg.format(interpreter.get_lim())
 
             new_lim = input (msg)
             if not new_lim.isdigit():
                 print (COLOR_FAIL + 'ERROR: bad type' + COLOR_END)
                 return
             try:
-                self.__inter.set_lim(int(new_lim))
+                interpreter.set_lim(int(new_lim))
                 print (COLOR_OKGREEN + 'limit updated' + COLOR_END)
             except InitializationException as e:
                 print (COLOR_FAIL + 'ERROR: bad limit' + COLOR_END)
 
         # clearing cells
         elif cmd == CMD_CLS:
-            self.__inter.clear_cells()
+            interpreter.clear_cells()
             print (COLOR_OKGREEN + 'cells cleared' + COLOR_END)
 
         # show cells
         elif cmd == CMD_SHOW:
-            print (COLOR_INFO + str(self.__inter) + COLOR_END)
+            print (COLOR_INFO + str(interpreter) + COLOR_END)
 
         # show interpreter's configuration
         elif cmd == CMD_CFG:
@@ -173,8 +186,8 @@ class CLI:
             cfg_str+= '\tlimit: {}\n'
             cfg_str+= '\tsize : {}'
             cfg_str = cfg_str.format (
-                    self.__inter.get_lim(),
-                    self.__inter.get_size()
+                    interpreter.get_lim(),
+                    interpreter.get_size()
                 )
 
             print (

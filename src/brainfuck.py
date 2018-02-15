@@ -87,5 +87,4 @@ if __name__ == '__main__':
 
     # cli
     else:
-        cli = CLI()
-        cli.run()
+        CLI.run(pyint)
