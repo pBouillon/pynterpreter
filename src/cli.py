@@ -139,7 +139,7 @@ class CLI:
                 self.__inter.set_size(int(new_size))
                 print (COLOR_OKGREEN + 'size updated' + COLOR_END)
             else:
-                print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END
+                print (COLOR_FAIL + 'ERROR: bad size' + COLOR_END)
         
         # changing limit
         elif cmd == CMD_LIMIT:)
