@@ -233,6 +233,11 @@ class Interpreter:
         """
         self.__tokens = []
 
+    def get_debug(self):
+        """
+        """
+        return self.__debug
+
     def get_lim(self):
         """
         """
