@@ -3,11 +3,11 @@ Brainfuck interpreter in Python3.X
 
 ## about this interpreter
 ### Brainfuck 
-You can use this interpreter to run 'classic' Brainfuck, which means 
+You can use this interpreter to run 'classic' brainfuck, which means 
 use those 8 instructions: `+` `-` `>` `<` `[` `]` `.` and `,`. All other symbols will be 
 considered as comments.
 
-If you never heard of Brainfuck, you can 
+If you never heard of brainfuck, you can 
 [start now here](https://learnxinyminutes.com/docs/brainfuck/).
 
 ### changes
