@@ -19,33 +19,7 @@ Finished in 0.002 ms.
 ```
 
 ### cli usage
-```shell
-~$ python3 path/src/brainfuck.py
-
-*********************************************************
-* Brainfuck interpreter written in Python 3             *
-*                                                       *
-* Author: pBouillon (https://pierrebouillon.tech/)      *
-* See:    https://github.com/pBouillon/pynterpreter.git *
-*********************************************************
-
-pynterpreter> /help
-    /help  ......... displays help
-    /size  ......... change tab size
-    /clear ......... clear memory cells
-    /loop  ......... change max loop limit
-    /show  ......... show cells status
-    /quit  ......... exit CLI
-
-pynterpreter> +++
-pynterpreter> [>+++++ +++++ <-]
-pynterpreter> >+++
-pynterpreter> .
-!
-pynterpreter> /show
-| 0 | [33] | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 
-pynterpreter> _
-```
+[[https://https://github.com/pBouillon/pynterpreter/blob/readme_img/img/cli_example.jpg|alt=cli_example]]
 
 ## improvements
 - [x] arg parser for source file
