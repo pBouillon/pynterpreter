@@ -19,7 +19,7 @@ Finished in 0.002 ms.
 ```
 
 ### cli usage
-[[https://github.com/pBouillon/pynterpreter/blob/readme_img/img/cli_example.jpg]]
+![CLI example](github.com/pBouillon/pynterpreter/blob/readme_img/img/cli_example.jpg?raw=true "CLI example")
 
 ## improvements
 - [x] arg parser for source file
