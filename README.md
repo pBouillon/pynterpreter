@@ -7,7 +7,7 @@ Small Brainfuck interpreter in Python3.X
 ~$ python3 path/src/brainfuck.py -f etc/hello_world.bf
 Output:
     Hello World!
-Finished in 0.051 ms.
+Finished in 0.003 ms.
 ```
 
 ### raw code as parameter
@@ -15,7 +15,7 @@ Finished in 0.051 ms.
 ~$ python3 path/src/brainfuck.py -c "+++[>++++++++++<-]>+++."
 Output:
     !
-Finished in 0.000 ms.
+Finished in 0.002 ms.
 ```
 
 ### cli usage

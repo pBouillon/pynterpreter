@@ -35,7 +35,7 @@ import interpreter
 from interpreter import Interpreter
 
 import time
-from time import time
+from time import clock
 
 
 PROG_DESC = """
@@ -63,7 +63,14 @@ def parse_args():
 
     return vars(parser.parse_args())
 
+def show_elapsed (beg) :
+    """
+    """
+    print ('Finished in {0:.3f} ms.'.format(clock() - beg))
+
 if __name__ == '__main__':
+    beg = clock()
+
     args   = parse_args()
     code   = args['code']
     source = args['file']
@@ -73,17 +80,15 @@ if __name__ == '__main__':
 
     # execute raw code
     if code:
-        beg = time()
         out = pyint.run (code = code)
         print ('Output:\n\t' + out)
-        print ('Finished in {0:.3f} ms.'.format(time() - beg))
+        show_elapsed (beg)
 
     # execute code from file
     elif source:
-        beg = time()
         out = pyint.run (file = source)
         print ('Output:\n\t' + out)
-        print ('Finished in {0:.3f} ms.'.format(time() - beg))
+        show_elapsed (beg)
 
     # cli
     else:

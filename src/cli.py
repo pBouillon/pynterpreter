@@ -186,8 +186,8 @@ class CLI:
             cfg_str = 'Configuration:\n'
             cfg_str+= '\tlimit: {}\n'
             cfg_str+= '\tsize : {}\n'
-            cfg_str+= '\tdebug is '
-            cfg_str+= 'ON' if interpreter.get_debug() else 'OFF'
+            cfg_str+= '\tdebug is: '
+            cfg_str+= 'on' if interpreter.get_debug() else 'off'
             cfg_str = cfg_str.format (
                     interpreter.get_lim(),
                     interpreter.get_size()
@@ -206,10 +206,11 @@ class CLI:
         # enable debug
         elif cmd == CMD_DEB:
             interpreter.toggle_debug()
+            msg = 'on' if interpreter.get_debug() else 'off'
             print (
                 COLOR_OKGREEN + 
                 'Debug is now ' +
-                'on' if interpreter.get_debug() else 'off' +
+                msg +
                 COLOR_END
             )
 
