@@ -52,10 +52,10 @@ pynterpreter> _
 - [x] better exception/error handling
 - [ ] comments
 - [x] interpreter in CLI
-- [ ] nested loops
+- [x] nested loops
 - [x] unit testing
 - [x] debug symbol
-- [ ] debug status in spec for CLI
+- [x] debug status in spec for CLI
 
 ## contributions
 All contributions are welcome !
