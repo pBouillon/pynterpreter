@@ -186,7 +186,7 @@ class Interpreter:
                     beg_ind = end_ind = -1
                     loop = 0
                 else:
-                    step = beg_in
+                    step = beg_ind
                     continue
 
             step += 1
