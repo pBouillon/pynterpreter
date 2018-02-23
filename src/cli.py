@@ -32,10 +32,13 @@ from exceptions import InitializationException
 import interpreter
 from interpreter import Interpreter
 
-COLOR_END     = '\033[0m'
-COLOR_FAIL    = '\033[91m'
-COLOR_OKGREEN = '\033[92m'
-COLOR_INFO    = '\033[93m'
+import platform
+from platform import system
+
+COLOR_END     = '\033[0m'  if system() is not 'Windows' else ''
+COLOR_FAIL    = '\033[91m' if system() is not 'Windows' else ''
+COLOR_OKGREEN = '\033[92m' if system() is not 'Windows' else ''
+COLOR_INFO    = '\033[93m' if system() is not 'Windows' else ''
 
 CMD_CLS   = 'clear'
 CMD_CFG   = 'cfg'
@@ -48,19 +51,15 @@ CMD_SHOW  = 'show'
 
 DEFAULT_OUTPUT = 'pynterpreter> '
 DEFAULT_PREFIX = '/'
-DEFAULT_ANSW   = 'Bad command, please see ' + \
-                    DEFAULT_PREFIX + \
-                    CMD_HELP
 DEFAULT_TAB_SP = 4
-
 EXIT_SUCCESS   = 0
 
 HELPER = '''\
     /clear ......... clear memory cells
     /cfg   ......... show interpreter's configuration
-    /debug ......... enable debug
+    /debug ......... toggle debug status
     /help  ......... displays help
-    /limit ......... change max limit limit
+    /limit ......... change max limit
     /quit  ......... exit CLI
     /show  ......... show cells status
     /size  ......... change tab size'''
@@ -128,7 +127,7 @@ class CLI:
             CLI.poll(interpreter)
         except KeyboardInterrupt:
             # properly exit on terminal display
-            print ('')
+            print ('Interruption catched, exiting...')
         
 
     @staticmethod
@@ -186,7 +185,9 @@ class CLI:
         elif cmd == CMD_CFG:
             cfg_str = 'Configuration:\n'
             cfg_str+= '\tlimit: {}\n'
-            cfg_str+= '\tsize : {}'
+            cfg_str+= '\tsize : {}\n'
+            cfg_str+= '\tdebug is '
+            cfg_str+= 'ON' if interpreter.get_debug() else 'OFF'
             cfg_str = cfg_str.format (
                     interpreter.get_lim(),
                     interpreter.get_size()
@@ -194,18 +195,30 @@ class CLI:
 
             print (
                 COLOR_INFO + 
-                cfg_str.expandtabs(DEFAULT_TAB_SP) + 
+                cfg_str.expandtabs (DEFAULT_TAB_SP) + 
                 COLOR_END
             )
 
         # exiting cli
         elif cmd == CMD_QUIT:
-            exit(EXIT_SUCCESS)
+            exit (EXIT_SUCCESS)
 
         # enable debug
         elif cmd == CMD_DEB:
             interpreter.toggle_debug()
+            print (
+                COLOR_OKGREEN + 
+                'Debug is now ' +
+                'on' if interpreter.get_debug() else 'off' +
+                COLOR_END
+            )
 
         # unhandled cmd
         else:
-            print(COLOR_INFO + DEFAULT_ANSW + COLOR_END)
+            print (
+                COLOR_INFO +
+                'Bad command, please see ' +
+                DEFAULT_PREFIX +
+                CMD_HELP +
+                COLOR_END
+            )
