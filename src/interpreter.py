@@ -82,7 +82,20 @@ class Interpreter:
     def __init__ (self, limit=MAX_LOOP, size=SIZE):
         """Initialize the interpreter
 
-        limit and size are optionnal
+        Parameter:
+            limit (int) : loop max
+            size  (int) : number of cells 
+
+        Attributes:
+            self.__max_loop (int) : max allowed loop
+            self.__tab_size (int) : number of cells
+
+            self.__ptr    (int)  : current cell pointed
+            self.__code   (list) : brainfuck operators
+            self.__vals   (list) : cells values
+            self.__tokens (list) : brainfuck token
+
+            self.__debug (bool)  : debug activated or not
         """
         self.__max_loop = limit
         self.__tab_size = size
@@ -110,7 +123,10 @@ class Interpreter:
         return tostr
 
     def __abort (self, errcode : int) -> None :
-        """
+        """Exit the app with the appropriate message
+
+        Parameter:
+            errcode (int) : error raised
         """
         errmsg = 'Error: ' + ERR_DICT[errcode]
         print (errmsg, file=stderr)
@@ -224,27 +240,27 @@ class Interpreter:
             )
 
     def clear_cells(self):
-        """
+        """Clear the cells
         """
         self.__vals = [0 for _ in range(self.__tab_size)]
 
     def clear_tokens(self):
-        """
+        """Clear the token
         """
         self.__tokens = []
 
     def get_debug(self):
-        """
+        """Getter for __debug
         """
         return self.__debug
 
     def get_lim(self):
-        """
+        """Getter for __max_loop
         """
         return self.__max_loop
 
     def get_size(self):
-        """
+        """Getter for __tab_size
         """
         return self.__tab_size
 
@@ -272,18 +288,32 @@ class Interpreter:
         return self.__execute()
 
     def toggle_debug(self):
-        """
+        """Turn on or off the debug mode
         """
         self.__debug = not self.__debug
 
     def set_lim(self, new_lim : int):
-        """
+        """Update limit
+
+        Set the new parameter
+        Check the validity of the new parameter
+        Generate the new tab, empty
+
+        Parameter:
+            new_lim (int) : new interpreter's limit
         """
         self.__max_loop = (new_lim)
         self.__check_interpreter()
 
     def set_size(self, new_size : int):
-        """
+        """Update size
+
+        Set the new parameter
+        Check the validity of the new parameter
+        Generate the new tab, empty
+
+        Parameter:
+            new_size (int) : new interpreter's size
         """
         self.__tab_size = new_size
         self.__check_interpreter()

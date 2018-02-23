@@ -26,7 +26,7 @@ SOFTWARE.
 """
 
 class ExecutionException(Exception):
-    """
+    """References ExecutionException
     """
     def __init__(self, msg, errcode):
         super().__init__(msg)

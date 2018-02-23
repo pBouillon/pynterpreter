@@ -54,7 +54,7 @@ Finished in 0.002 ms.
 ## improvements
 - [x] arg parser for source file
 - [x] better exception/error handling
-- [ ] comments
+- [x] comments
 - [x] debug symbol
 - [x] debug status in spec for CLI
 - [x] interpreter in CLI

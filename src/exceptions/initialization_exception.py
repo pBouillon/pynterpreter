@@ -26,7 +26,7 @@ SOFTWARE.
 """
 
 class InitializationException(Exception):
-    """
+    """References InitializationException
     """
     def __init__(self, msg, errcode):
         super().__init__(msg)

@@ -45,7 +45,13 @@ PROG_DESC = """
 
 
 def parse_args():
-    """
+    """Parse provided args
+
+    Add -c option
+    Add -f option
+    
+    Returns:
+        (dict) : {opt: val}
     """
     parser = ArgumentParser (description = PROG_DESC)
 
@@ -64,7 +70,10 @@ def parse_args():
     return vars(parser.parse_args())
 
 def show_elapsed (beg) :
-    """
+    """Print time elapsed since `beg`
+    
+    Parameter:
+        beg (int) : 
     """
     print ('Finished in {0:.3f} ms.'.format(clock() - beg))
 
@@ -92,4 +101,4 @@ if __name__ == '__main__':
 
     # cli
     else:
-        CLI.run(pyint)
+        CLI.run (pyint)

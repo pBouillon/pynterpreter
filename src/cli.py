@@ -76,8 +76,16 @@ WELCOME = '''
 
 class CLI:
     @staticmethod
-    def poll(interpreter):
-        """
+    def poll (interpreter):
+        """Show user interface
+
+        Wait for user input
+        If input starts with PREFIX, execute it as a command
+        Else execute input as brainfuck code
+        Start again
+
+        Parameter:
+            interpreter (Interpreter) : brainfuck interpreter
         """
         while True:
             usr_in = input(DEFAULT_OUTPUT)
@@ -119,20 +127,29 @@ class CLI:
                     interpreter.clear_tokens()
 
     @staticmethod
-    def run(interpreter):
-        """
+    def run (interpreter):
+        """Starts the CLI
+
+        Parameter:
+            interpreter (Interpreter) : brainfuck interpreter
         """
         print (WELCOME)
         try:
-            CLI.poll(interpreter)
+            CLI.poll (interpreter)
         except KeyboardInterrupt:
-            # properly exit on terminal display
             print ('Interruption catched, exiting...')
         
 
     @staticmethod
-    def __run_cmd(cmd, interpreter):
-        """
+    def __run_cmd (cmd, interpreter):
+        """Execute the provided cmd
+
+        Check if cmd is recognized
+        Perform the associated operation
+        
+        Parameter:
+            cmd (str) : command
+            interpreter (Interpreter) : brainfuck interpreter
         """
         # helper
         if cmd == CMD_HELP:
