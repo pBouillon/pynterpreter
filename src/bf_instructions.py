@@ -42,6 +42,9 @@ OP_LOOP_B = '['
 # Go to the first delimiter if current block != 0
 OP_LOOP_E = ']'
 
+# Debug symbol: prints current tab when met
+OP_DEBUG = '%'
+
 # Primary BF instructions
 OPS = [
     OP_INC   ,
@@ -51,7 +54,8 @@ OPS = [
     OP_INP   ,
     OP_PRINT ,
     OP_LOOP_B,
-    OP_LOOP_E
+    OP_LOOP_E,
+    OP_DEBUG
 ]
 
 # BF extension

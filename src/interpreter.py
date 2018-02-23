@@ -27,6 +27,7 @@ SOFTWARE.
 
 import bf_instructions
 from bf_instructions import EXTENSION
+from bf_instructions import OP_DEBUG
 from bf_instructions import OP_DEC
 from bf_instructions import OP_INC
 from bf_instructions import OP_INP
@@ -90,6 +91,8 @@ class Interpreter:
         self.__code   = []
         self.__vals   = [0 for _ in range(self.__tab_size)]
         self.__tokens = []
+
+        self.__debug  = False
 
         self.__check_interpreter()
 
@@ -189,6 +192,9 @@ class Interpreter:
                     step = beg_ind
                     continue
 
+            elif token == OP_DEBUG and self.__debug:
+                print (self)
+
             step += 1
 
         return prog_output
@@ -259,6 +265,11 @@ class Interpreter:
 
         self.__tokenize()
         return self.__execute()
+
+    def toggle_debug(self):
+        """
+        """
+        self.__debug = not self.__debug
 
     def set_lim(self, new_lim : int):
         """

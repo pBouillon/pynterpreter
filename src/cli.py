@@ -37,13 +37,14 @@ COLOR_FAIL    = '\033[91m'
 COLOR_OKGREEN = '\033[92m'
 COLOR_INFO    = '\033[93m'
 
-CMD_CLS  = 'clear'
-CMD_CFG  = 'cfg'
-CMD_HELP = 'help'
-CMD_QUIT = 'quit'
+CMD_CLS   = 'clear'
+CMD_CFG   = 'cfg'
+CMD_DEB   = 'debug'
+CMD_HELP  = 'help'
+CMD_QUIT  = 'quit'
 CMD_LIMIT = 'limit'
-CMD_SIZE = 'size'
-CMD_SHOW = 'show'
+CMD_SIZE  = 'size'
+CMD_SHOW  = 'show'
 
 DEFAULT_OUTPUT = 'pynterpreter> '
 DEFAULT_PREFIX = '/'
@@ -57,6 +58,7 @@ EXIT_SUCCESS   = 0
 HELPER = '''\
     /clear ......... clear memory cells
     /cfg   ......... show interpreter's configuration
+    /debug ......... enable debug
     /help  ......... displays help
     /limit ......... change max limit limit
     /quit  ......... exit CLI
@@ -199,6 +201,10 @@ class CLI:
         # exiting cli
         elif cmd == CMD_QUIT:
             exit(EXIT_SUCCESS)
+
+        # enable debug
+        elif cmd == CMD_DEB:
+            interpreter.toggle_debug()
 
         # unhandled cmd
         else:
