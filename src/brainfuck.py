@@ -37,7 +37,6 @@ from interpreter import Interpreter
 import time
 from time import clock
 
-
 PROG_DESC = """
     Brainfuck interpreter written in Python3.X
     See https://github.com/pBouillon/pynterpreter.git
@@ -53,52 +52,53 @@ def parse_args():
     Returns:
         (dict) : {opt: val}
     """
-    parser = ArgumentParser (description = PROG_DESC)
+    parser = ArgumentParser(description=PROG_DESC)
 
-    group = parser.add_mutually_exclusive_group ()
-    group.add_argument (
-        '-c', 
-        '--code', 
-        help = 'Raw BF code'
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        '-c',
+        '--code',
+        help='Raw BF code'
     )
-    group.add_argument (
-        '-f', 
-        '--file', 
-        help = 'Path to BF source'
+    group.add_argument(
+        '-f',
+        '--file',
+        help='Path to BF source'
     )
 
     return vars(parser.parse_args())
 
-def show_elapsed (beg) :
+
+def show_elapsed(beg):
     """Print time elapsed since `beg`
     
     Parameter:
         beg (int) : 
     """
-    print ('Finished in {0:.3f} ms.'.format(clock() - beg))
+    print('Finished in {0:.3f} ms.'.format(clock() - beg))
+
 
 if __name__ == '__main__':
     beg = clock()
 
-    args   = parse_args()
-    code   = args['code']
+    args = parse_args()
+    code = args['code']
     source = args['file']
-
 
     pyint = Interpreter()
 
     # execute raw code
     if code:
-        out = pyint.run (code = code)
-        print ('Output:\n\t' + out)
-        show_elapsed (beg)
+        out = pyint.run(code=code)
+        print('Output:\n\t' + out)
+        show_elapsed(beg)
 
     # execute code from file
     elif source:
-        out = pyint.run (file = source)
-        print ('Output:\n\t' + out)
-        show_elapsed (beg)
+        out = pyint.run(file=source)
+        print('Output:\n\t' + out)
+        show_elapsed(beg)
 
     # cli
     else:
-        CLI.run (pyint)
+        CLI.run(pyint)

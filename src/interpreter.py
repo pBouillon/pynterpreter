@@ -65,9 +65,10 @@ import time
 from time import time
 
 # Max loop repetition
-MAX_LOOP  = 200
+MAX_LOOP = 200
 # Numbers of blocks
-SIZE      = 16
+SIZE = 16
+
 
 class Interpreter:
     """References Interpreter
@@ -79,7 +80,8 @@ class Interpreter:
         __vals     : blocks for execution
         __tokens   : token parsed
     """
-    def __init__ (self, limit=MAX_LOOP, size=SIZE):
+
+    def __init__(self, limit=MAX_LOOP, size=SIZE):
         """Initialize the interpreter
 
         Parameter:
@@ -100,122 +102,123 @@ class Interpreter:
         self.__max_loop = limit
         self.__tab_size = size
 
-        self.__ptr    = 0
-        self.__code   = []
-        self.__vals   = [0 for _ in range(self.__tab_size)]
+        self.__ptr = 0
+        self.__code = []
+        self.__vals = [0 for _ in range(self.__tab_size)]
         self.__tokens = []
 
-        self.__debug  = False
+        self.__debug = False
 
         self.__check_interpreter()
 
-    def __str__ (self):
+    def __str__(self):
         """Show blocks state
         """
-        tostr = '| '
-        for x in range(self.__tab_size) :
+        to_str = '| '
+        for x in range(self.__tab_size):
             val = self.__vals[x]
             if x == self.__ptr:
-                tostr += '[' + str(val) + ']'
+                to_str += '[' + str(val) + ']'
             else:
-                tostr += str(val)
-            tostr += ' | '
-        return tostr
+                to_str += str(val)
+            to_str += ' | '
+        return to_str
 
-    def __abort (self, errcode : int) -> None :
+    @staticmethod
+    def __abort(errcode: int) -> None:
         """Exit the app with the appropriate message
 
         Parameter:
             errcode (int) : error raised
         """
         errmsg = 'Error: ' + ERR_DICT[errcode]
-        print (errmsg, file=stderr)
-        exit (errcode)
+        print(errmsg, file=stderr)
+        exit(errcode)
 
-    def __check_interpreter (self) :
+    def __check_interpreter(self):
         """Ensure that the values are correctly set
         """
-        if not 0 < self.__max_loop < maxsize :
-            raise InitializationException (
-                EXC_DICT[EXC_CODE_LOOP], 
+        if not 0 < self.__max_loop < maxsize:
+            raise InitializationException(
+                EXC_DICT[EXC_CODE_LOOP],
                 EXC_CODE_LOOP
             )
 
         if not 0 < self.__tab_size < maxsize:
-            raise InitializationException (
-                EXC_DICT[EXC_CODE_CELL], 
+            raise InitializationException(
+                EXC_DICT[EXC_CODE_CELL],
                 EXC_CODE_CELL
             )
 
-    def __execute (self):
+    def __execute(self):
         """Run the tokenized code
         """
         step = 0
         loop = 0
-        beg_ind = end_ind = -1
+        beg_ind = -1
         prog_output = ''
 
         while step < len(self.__tokens):
             token = self.__tokens[step]
 
-            # Currrent token is +
+            # Current token is +
             if token == OP_INC:
                 self.__vals[self.__ptr] += 1
 
-            # Currrent token is -
+            # Current token is -
             elif token == OP_DEC:
                 self.__vals[self.__ptr] -= 1
 
-            # Currrent token is >
+            # Current token is >
             elif token == OP_NEXT:
                 self.__ptr += 1
                 if self.__ptr == self.__tab_size:
                     self.__ptr = 0
 
-            # Currrent token is <
+            # Current token is <
             elif token == OP_PREV:
                 self.__ptr -= 1
-                if self.__ptr == -1 :
+                if self.__ptr == -1:
                     self.__ptr = self.__tab_size - 1
 
-            # Currrent token is ,
+            # Current token is ,
             elif token == OP_INP:
                 entry = input('bf input: ')
                 self.__vals[self.__ptr] = ord(entry)
 
-            # Currrent token is ,
+            # Current token is ,
             elif token == OP_PRINT:
                 content = chr(self.__vals[self.__ptr])
                 prog_output += content
 
-            # Currrent token is [
+            # Current token is [
             elif token == OP_LOOP_B:
-                beg_ind = step 
-                end_ind = [i for i, x in enumerate(self.__tokens) if x == OP_LOOP_E][0]
-            
-            # Currrent token is ]
+                beg_ind = step
+                # end_ind = [i for i, x in enumerate(self.__tokens) if x == OP_LOOP_E][0]
+
+            # Current token is ]
             elif token == OP_LOOP_E:
                 loop += 1
                 if loop == self.__max_loop:
-                    raise ExecutionException (
-                        EXC_DICT[EXC_CODE_LOOP_M], 
+                    raise ExecutionException(
+                        EXC_DICT[EXC_CODE_LOOP_M],
                         EXC_CODE_LOOP_M
                     )
                 if self.__vals[self.__ptr] == 0:
-                    beg_ind = end_ind = -1
+                    beg_ind = -1
                     loop = 0
                 else:
                     step = beg_ind
                     continue
 
             elif token == OP_DEBUG and self.__debug:
-                print (self)
+                print(self)
 
             step += 1
 
         return prog_output
 
-    def __tokenize (self):
+    def __tokenize(self):
         """Get all tokens
         """
         l_b = l_e = 0
@@ -229,14 +232,14 @@ class Interpreter:
             if t == OP_LOOP_E:
                 l_e += 1
             if l_e > l_b:
-                raise ExecutionException (
-                    EXC_DICT[EXC_CODE_BRAC_I], 
+                raise ExecutionException(
+                    EXC_DICT[EXC_CODE_BRAC_I],
                     EXC_CODE_BRAC_I
                 )
         if l_e != l_b:
-            raise ExecutionException (
-                    EXC_DICT[EXC_CODE_BRAC_M], 
-                    EXC_CODE_BRAC_M
+            raise ExecutionException(
+                EXC_DICT[EXC_CODE_BRAC_M],
+                EXC_CODE_BRAC_M
             )
 
     def clear_cells(self):
@@ -264,24 +267,24 @@ class Interpreter:
         """
         return self.__tab_size
 
-    def run (self, code='', file=''):
+    def run(self, code='', file=''):
         """Run the BF code
         """
         if file and code:
-            print ('WARNING: reading file instead of the code')
+            print('WARNING: reading file instead of the code')
 
         if file:
             source = Path(file)
-            if source.exists() :
+            if source.exists():
                 if not source.is_file():
-                    self.__abort (ERR_CODE_NOT_FILE)
-                if file[len(file) - 3 :] != EXTENSION:
-                    self.__abort (ERR_CODE_NOT_SOURCE)
+                    self.__abort(ERR_CODE_NOT_FILE)
+                if file[len(file) - 3:] != EXTENSION:
+                    self.__abort(ERR_CODE_NOT_SOURCE)
                 with source.open() as f:
                     self.__code = f.read()
             else:
-                self.__abort (ERR_CODE_FILE_MISSING)
-        else :        
+                self.__abort(ERR_CODE_FILE_MISSING)
+        else:
             self.__code = code
 
         self.__tokenize()
@@ -292,7 +295,7 @@ class Interpreter:
         """
         self.__debug = not self.__debug
 
-    def set_lim(self, new_lim : int):
+    def set_lim(self, new_lim: int):
         """Update limit
 
         Set the new parameter
@@ -302,10 +305,10 @@ class Interpreter:
         Parameter:
             new_lim (int) : new interpreter's limit
         """
-        self.__max_loop = (new_lim)
+        self.__max_loop = new_lim
         self.__check_interpreter()
 
-    def set_size(self, new_size : int):
+    def set_size(self, new_size: int):
         """Update size
 
         Set the new parameter

@@ -25,9 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+
 class InitializationException(Exception):
     """References InitializationException
     """
+
     def __init__(self, msg, errcode):
         super().__init__(msg)
         self.errcode = errcode
