@@ -8,7 +8,7 @@ use those 8 instructions: `+` `-` `>` `<` `[` `]` `.` and `,`. All other symbols
 considered as comments.
 
 If you never heard of brainfuck, you can 
-[start now here](https://learnxinyminutes.com/docs/brainfuck/).
+[start now here](https://fr.wikipedia.org/wiki/Brainfuck).
 
 ### changes
 *pynterpreter* brings one new operation symbol. When the debug mode is 
